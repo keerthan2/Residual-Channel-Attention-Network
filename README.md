@@ -5,18 +5,8 @@ Implementation of "Image Super-Resolution Using Very Deep Residual Channel Atten
 1. Training Dataset is [DIV2K dataset](https://data.vision.ee.ethz.ch/cvl/DIV2K/).The TFRecords for the same and npz files of the benchmark dataset can be found in the [drive link]().
 
 2. Prepare the following Directory structure
---> benchmark
-    --> npz files of benchmark dataset
---> code
-    --> data
-        --> TFRecords files
-    --> All the code files
---> results
-    --> set5 (similarly for set14,b100,urban100)
-        --> gt
-        --> predicted
---> eval
-    --> All the evaluation scripts
+
+![Directory_Tree](Figs/directory_tree.jpg)
 
 3. cd to `code`. Specify the scale of upsampling by '--scale'. Default value is 4. 
 
