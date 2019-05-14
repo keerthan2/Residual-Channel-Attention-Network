@@ -22,9 +22,11 @@ inter_op_parallelism_threads = 5
 parser = argparse.ArgumentParser(description='Custom')
 parser.add_argument('--eval', type=str, default='set5',
                     help='evalutaion set')
+parser.add_argument('--scale', type=int, default=4,
+                    help='integer value describing scale')
 args = parser.parse_args()
-file_names = ['set5','set14','b100','urban100']
-scale = 4
+file_names = args.eval
+scale = args.scale
 checkpoint_file = tf.train.latest_checkpoint('log/')#'log_train/model.ckpt-15750'
 with tf.Graph().as_default(),tf.device('/gpu:0') as graph:
     tf.logging.set_verbosity(tf.logging.INFO) 

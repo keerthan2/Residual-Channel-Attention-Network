@@ -26,10 +26,8 @@ def c_attention(x,ch,i,j,r):
     out = tf.keras.layers.GlobalMaxPool2D()(x)
     out = tf.expand_dims(out,axis=1)
     out = tf.expand_dims(out,axis=1)
-    out = conv2d(out, ch, kernel=1, stride=(1,1), pad=0, pad_type='zero', use_bias=True, sn=False, scope='ca_conv1_'+str(i)+'_'+str(j))
     out = conv2d(out, int(ch/r),stride=(1,1), pad=0, pad_type='zero', use_bias=True, sn=False,scope='ca_conv5_'+str(i)+'_'+str(j))
     out = tf.nn.relu(out)
-    out = conv2d(out, ch, kernel=1, stride=(1,1), pad=0, pad_type='zero', use_bias=True, sn=False, scope='ca_conv2_'+str(i)+'_'+str(j))
     out = conv2d(out, ch,kernel=1, stride=(1,1),pad=0, pad_type='zero', use_bias=True, sn=False,scope='ca_conv6_'+str(i)+'_'+str(j))
     out = tf.nn.sigmoid(out)
     out = tf.tile(out,[1,tf.shape(x)[1],tf.shape(x)[2],1])
@@ -161,4 +159,28 @@ def upscale(X, r=4, color=False):
     else:
         X = _phase_shift(X, r)
     return X
+
+def DownSample(x, h, scale=4):
+    #ds_x = x.get_shape()
+    #x = tf.reshape(x, [ds_x[0]*ds_x[1], ds_x[2], ds_x[3], 3])
+    W = tf.constant(h)
+    filter_height, filter_width = 13, 13
+    pad_height = filter_height - 1
+    pad_width = filter_width - 1
+    pad_top = pad_height // 2
+    pad_bottom = pad_height - pad_top
+    pad_left = pad_width // 2
+    pad_right = pad_width - pad_left
+    pad_array = [[0,0], [pad_top, pad_bottom], [pad_left, pad_right], [0,0]]    
+    depthwise_F = tf.tile(W, [1, 1, 3, 1])
+    y = tf.nn.depthwise_conv2d(tf.pad(x, pad_array, mode='REFLECT'), depthwise_F, [1, scale, scale, 1], 'VALID')
+    ds_y = y.get_shape()
+    #y = tf.reshape(y, [ds_x[0], ds_x[1], ds_y[1], ds_y[2], 3])
+    return y
+
+def gkern(kernlen=13, nsig=1.6):
+    import scipy.ndimage.filters as fi
+    inp = np.zeros((kernlen, kernlen))
+    inp[kernlen//2, kernlen//2] = 1
+    return fi.gaussian_filter(inp, nsig)
 
