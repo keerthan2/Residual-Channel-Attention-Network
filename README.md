@@ -19,3 +19,12 @@ Run ```python3 infer.py ``` . The output will be stored in `results`.
 1. cd to eval
 
 2. Run `./matlab_eval.sh`
+
+## Sample Results for x4 upsampling
+|Ground Truth | Predicted|
+-|-|
+![](sample_results/1gt.png)|![](sample_results/1pred.png)|
+![](sample_results/2gt.png)|![](sample_results/2pred.png)|
+![](sample_results/3gt.png)|![](sample_results/3pred.png)|
+
+All the results are in Y channel. We can perform Bicubic interpolation in Cr and Cb channels and merge with the predicted Y channel. 
