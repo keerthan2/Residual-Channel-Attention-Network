@@ -65,7 +65,7 @@ with tf.Graph().as_default(),tf.device('/gpu:0') as graph:
                 result = sess.run(predicted_y,{image_data:pad_input_data_rgb,height:pad_input_data_rgb.shape[0],width:pad_input_data_rgb.shape[1]})
 
 
-                imsave('results/'+file_name+'/predicted/'+str(i+1)+'.png', result)
-                imsave('results/'+file_name+'/gt/'+str(i+1)+'.png', pad_input_data_y)
+                imsave('../results/'+file_name+'/predicted/'+str(i+1)+'.png', result)
+                imsave('../results/'+file_name+'/gt/'+str(i+1)+'.png', pad_input_data_y)
             print(file_name," inference complete")
         
