@@ -1,4 +1,4 @@
-lst = {'set5','set14','b100','urban100'};
+lst = {'../results/set5','../results/set14','../results/b100','../results/urban100'};
 sota_psnr = {32.73,28.98,27.85,27.10};
 sota_ssim = {0.9013,0.7910,0.7455,0.8142};
 for j = 1:4
